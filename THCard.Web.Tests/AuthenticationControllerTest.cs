@@ -6,7 +6,6 @@ using THCard.AccountManagement;
 using THCard.Web.Controllers.Authentication;
 
 namespace THCard.Web.Tests {
-
 	[TestFixture]
 	public class AuthenticationControllerTest {
 		[SetUp]
@@ -15,6 +14,7 @@ namespace THCard.Web.Tests {
 			_session = new Mock<ISession>();
 			_authAuthTempData = new AuthenticationTempData(new TempDataDictionary());
 			_account = new Account(new AccountId(Guid.NewGuid()), _username, new UserId(Guid.NewGuid()), new AccountRoles());
+			_authService = new Mock<IUserAuthenticationService>();
 		}
 
 		private readonly Username _username = new Username("username");
@@ -23,6 +23,7 @@ namespace THCard.Web.Tests {
 		private Mock<ISession> _session;
 		private AuthenticationTempData _authAuthTempData;
 		private Account _account;
+		private Mock<IUserAuthenticationService> _authService;
 
 		private static void AssertRedirectedTo(ActionResult actionResult, PageRoute expectedPage) {
 			Assert.That(actionResult, Is.Not.Null);
@@ -34,9 +35,9 @@ namespace THCard.Web.Tests {
 		[Test]
 		public void RedirectsToLoginPage_WhenLoginFails() {
 			_session.SetupGet(it => it.IsAuthenticated).Returns(false);
-			_session.Setup(it => it.Login(_username, _password)).Returns(LoginAttemptResult.UsernameNotFound());
+			_authService.Setup(it => it.Authenticate(_username, _password)).Returns(LoginAttemptResult.UsernameNotFound());
 
-			var controller = new AuthenticationController(_siteMap.Object, _session.Object, _authAuthTempData);
+			var controller = new AuthenticationController(_siteMap.Object, _session.Object, _authAuthTempData, _authService);
 
 			ActionResult actionResult = controller.Login(_username.ToString(), _password.ToString());
 
@@ -47,7 +48,7 @@ namespace THCard.Web.Tests {
 		[Test]
 		public void RedirectsToLoginReturnPageInTempData_WhenLoginSucceeds() {
 			_session.SetupGet(it => it.IsAuthenticated).Returns(false);
-			_session.Setup(it => it.Login(_username, _password)).Returns(LoginAttemptResult.Success(_account));
+			_authService.Setup(it => it.Authenticate(_username, _password)).Returns(LoginAttemptResult.Success(_account));
 			var loginRedirectPage = new PageRoute("LoginRedirectPage");
 			_authAuthTempData.LoginReturnPage.Store(loginRedirectPage);
 

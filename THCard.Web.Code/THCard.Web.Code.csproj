@@ -138,6 +138,7 @@
     <Compile Include="MvcApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteConfig.cs" />
+    <Compile Include="UserAuthenticationService.cs" />
     <Compile Include="WebViewPage.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace THCard.Web {
 
 		public Account AuthenticatedAccount {
 			get {
-				Contract.Requires(UserIdentity.IsAuthenticated);
+				Contract.Assert(UserIdentity.IsAuthenticated);
 				AccountId accountId = AccountId.Parse(UserIdentity.Name);
 				Contract.Assert(accountId != null);
 				return _authenticatedAccount ?? (_authenticatedAccount = _accountRepository.GetAccount(accountId));
@@ -51,7 +51,9 @@ namespace THCard.Web {
 		}
 
 		public void EndAuthenticatedSession() {
+			if (!IsAuthenticated) return;
 			UserIdentity = new GenericIdentity(string.Empty);
+			FormsAuthentication.SignOut();
 		}
 	}
 }
