@@ -11,7 +11,7 @@ namespace THCard.Web.Tests {
 	public class AuthenticationControllerTest {
 		[SetUp]
 		public void SetUpTest() {
-			_siteMapMock = new SiteMapMock();
+			_siteMap = new SiteMapMock();
 			_sessionMock = new Mock<ISession>();
 			_authAuthTempData = new AuthenticationTempData(new TempDataDictionary());
 			_account = new Account(new AccountId(Guid.NewGuid()), _username, new UserId(Guid.NewGuid()), new AccountRoles());
@@ -19,7 +19,7 @@ namespace THCard.Web.Tests {
 
 		private readonly Username _username = new Username("username");
 		private readonly Password _password = new Password("password");
-		private SiteMapMock _siteMapMock;
+		private SiteMapMock _siteMap;
 		private Mock<ISession> _sessionMock;
 		private AuthenticationTempData _authAuthTempData;
 		private Account _account;
@@ -36,11 +36,11 @@ namespace THCard.Web.Tests {
 			_sessionMock.SetupGet(it => it.IsAuthenticated).Returns(false);
 			_sessionMock.Setup(it => it.Login(_username, _password)).Returns(LoginAttemptResult.UsernameNotFound());
 
-			var controller = new AuthenticationController(_siteMapMock.Object, _sessionMock.Object, _authAuthTempData);
+			var controller = new AuthenticationController(_siteMap.Object, _sessionMock.Object, _authAuthTempData);
 
 			ActionResult actionResult = controller.Login(_username.ToString(), _password.ToString());
 
-			AssertRedirectedTo(actionResult, _siteMapMock.LoginPage);
+			AssertRedirectedTo(actionResult, _siteMap.LoginPage);
 			Assert.That(_authAuthTempData.ErrorMessages.Get(), Is.Not.Empty);
 		}
 
@@ -51,38 +51,11 @@ namespace THCard.Web.Tests {
 			var loginRedirectPage = new PageRoute("LoginRedirectPage");
 			_authAuthTempData.LoginReturnPage.Store(loginRedirectPage);
 
-			var controller = new AuthenticationController(_siteMapMock.Object, _sessionMock.Object, _authAuthTempData);
+			var controller = new AuthenticationController(_siteMap.Object, _sessionMock.Object, _authAuthTempData);
 
 			ActionResult actionResult = controller.Login(_username.ToString(), _password.ToString());
 
 			AssertRedirectedTo(actionResult, loginRedirectPage);
-		}
-	}
-
-	public class SiteMapMock {
-		private readonly Mock<ISiteMap> _siteMapMock;
-
-		public SiteMapMock() {
-			_siteMapMock = new Mock<ISiteMap>();
-			_siteMapMock.Setup(it => it.GetLandingPage(It.IsAny<Account>())).Returns(AccountLandingPage);
-			_siteMapMock.Setup(it => it.GetLoginPage()).Returns(LoginPage);
-			_siteMapMock.Setup(it => it.GetPublicLandingPage()).Returns(PublicLandingPage);
-		}
-
-		public ISiteMap Object {
-			get { return _siteMapMock.Object; }
-		}
-
-		public PageRoute LoginPage {
-			get { return new PageRoute("Login"); }
-		}
-
-		public PageRoute AccountLandingPage {
-			get { return new PageRoute("AccountLandingPage"); }
-		}
-
-		public PageRoute PublicLandingPage {
-			get { return new PageRoute("PublicLandingPage"); }
 		}
 	}
 }
