@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Diagnostics.Contracts;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Security;
 using THCard.AccountManagement;
 
 namespace THCard.Web {
@@ -23,7 +24,9 @@ namespace THCard.Web {
 
 		public Account AuthenticatedAccount {
 			get {
+				Contract.Requires(UserIdentity.IsAuthenticated);
 				AccountId accountId = AccountId.Parse(UserIdentity.Name);
+				Contract.Assert(accountId != null);
 				return _authenticatedAccount ?? (_authenticatedAccount = _accountRepository.GetAccount(accountId));
 			}
 			private set { _authenticatedAccount = value; }
@@ -44,14 +47,11 @@ namespace THCard.Web {
 		public void BeginAuthenticatedSession(Account account) {
 			AuthenticatedAccount = account;
 			UserIdentity = new GenericIdentity(account.AccountId.ToString(), "THCardAuthentication");
+			FormsAuthentication.SetAuthCookie(account.AccountId.ToString(), false);
 		}
 
 		public void EndAuthenticatedSession() {
 			UserIdentity = new GenericIdentity(string.Empty);
-		}
-
-		public void Logout() {
-			throw new NotImplementedException();
 		}
 	}
 }
