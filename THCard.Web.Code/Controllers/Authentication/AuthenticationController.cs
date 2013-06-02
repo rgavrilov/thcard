@@ -42,7 +42,7 @@ namespace THCard.Web.Controllers.Authentication {
 				}
 				_session.BeginAuthenticatedSession(loginAttemptResult.Account);
 			}
-			return RedirectToRoute(TempData.LoginReturnPage ?? _siteMap.GetLandingPage(_session.AuthenticatedAccount));
+			return RedirectToRoute(TempData.LoginReturnPage.Get() ?? _siteMap.GetLandingPage(_session.AuthenticatedAccount));
 		}
 
 		private string GetLoginFailureMessage(LoginAttemptResult loginAttemptResult) {

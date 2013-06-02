@@ -1,22 +1,21 @@
 ﻿using THCard.AccountManagement;
-using THCard.AccountManagement.Dal;
 using THCard.Web.Controllers.LoginControl.Models;
 using THCard.Web.Infrastructure;
-using Account = THCard.AccountManagement.Account;
-using User = THCard.AccountManagement.User;
 
 namespace THCard.Web.Controllers.LoginControl {
 	[PresenterFor(typeof (LoginControlController))]
 	public sealed class LoginControlPresenter {
+		private readonly ISiteMap _siteMap;
 		private readonly IUserRepository _userRepository;
 
-		public LoginControlPresenter(IUserRepository userRepository) {
+		public LoginControlPresenter(IUserRepository userRepository, ISiteMap siteMap) {
 			_userRepository = userRepository;
+			_siteMap = siteMap;
 		}
 
 		public AuthenticatedLoginControlViewModel Authenticated(Account account) {
 			User user = _userRepository.GetUser(account.UserId);
-			var viewModel = new AuthenticatedLoginControlViewModel(user.FullName);
+			var viewModel = new AuthenticatedLoginControlViewModel(user.FullName, _siteMap.GetLandingPage(account));
 			return viewModel;
 		}
 	}

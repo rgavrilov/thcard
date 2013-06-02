@@ -37,7 +37,7 @@ namespace THCard.AccountManagement {
 	}
 
 	public sealed class FullName {
-		public string FamilyName { get; set; }
+		public Name FamilyName { get; set; }
 		public GivenNames GivenNames { get; set; }
 
 		public Name FirstName {

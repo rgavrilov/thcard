@@ -19,6 +19,7 @@ namespace THCard.Web {
 			kernel.Bind<IPresenterFactory>().To<PresenterFactory>();
 			kernel.Bind<IPresenterActivator>()
 			      .ToConstant<IPresenterActivator>(new DelegatePresenterActivator(type => kernel.Get(type)));
+			kernel.Bind<IUserAuthenticationService>().To<UserAuthenticationService>();
 
 			return kernel;
 		}

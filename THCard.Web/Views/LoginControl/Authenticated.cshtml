@@ -1,14 +1,13 @@
-﻿@using THCard.Web.Controllers.Authentication.Models
-@model THCard.Web.Controllers.LoginControl.Models.AuthenticatedLoginControlViewModel
+﻿@model THCard.Web.Controllers.LoginControl.Models.AuthenticatedLoginControlViewModel
 
 @{
 	Layout = "_LoginControlLayout.cshtml";
 }
 
-<a href="@Url.Action("Dashboard", "Authentication")" class="small black login"><span class="username">Welcome, <span>@Model.UserFullName</span></span></a>
+<form id="logoutForm" name="logoutForm" action="@Url.Action("Logout", "Authentication")" method="POST"></form>
+
+<a href="@Url.RouteUrl(Model.DashboardPage)" class="small black login"><span class="username">Welcome, <span>@Html.DisplayFor(m => m.UserFullName, "FullName")</span></span></a>
 
 <div class="divider"></div>
 
-<form id="logoutForm" action="@Url.Action("Logout", "Authentication")" style="display: none;"></form>
-         
-<a href="javascript:void(this);" onclick="javascript:document.logoutForm.submit();" class="small black logout button"><span class="log-in">Logout</span></a>
+<a href="javascript:void(this);" onclick=" javascript:document.logoutForm.submit(); " class="small black logout button"><span class="log-in">Logout</span></a>

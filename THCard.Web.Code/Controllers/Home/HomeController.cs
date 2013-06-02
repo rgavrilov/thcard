@@ -2,7 +2,7 @@
 
 namespace THCard.Web.Controllers.Home {
 	public class HomeController : Controller {
-		[THCard.Web.Infrastructure.Authorize]
+		[AllowAnonymous]
 		public ActionResult Index() {
 			return View();
 		}
