@@ -37,7 +37,7 @@ namespace THCard.Web.Tests {
 			_session.SetupGet(it => it.IsAuthenticated).Returns(false);
 			_authService.Setup(it => it.Authenticate(_username, _password)).Returns(LoginAttemptResult.UsernameNotFound());
 
-			var controller = new AuthenticationController(_siteMap.Object, _session.Object, _authAuthTempData, _authService);
+			var controller = new AuthenticationController(_siteMap.Object, _session.Object, _authAuthTempData, _authService.Object);
 
 			ActionResult actionResult = controller.Login(_username.ToString(), _password.ToString());
 
@@ -52,7 +52,7 @@ namespace THCard.Web.Tests {
 			var loginRedirectPage = new PageRoute("LoginRedirectPage");
 			_authAuthTempData.LoginReturnPage.Store(loginRedirectPage);
 
-			var controller = new AuthenticationController(_siteMap.Object, _session.Object, _authAuthTempData);
+			var controller = new AuthenticationController(_siteMap.Object, _session.Object, _authAuthTempData, _authService.Object);
 
 			ActionResult actionResult = controller.Login(_username.ToString(), _password.ToString());
 
