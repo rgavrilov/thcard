@@ -7,7 +7,6 @@ using THCard.Web.Controllers.Authentication;
 
 namespace THCard.Web.Tests {
 
-
 	[TestFixture]
 	public class AuthenticationControllerTest {
 		[SetUp]
