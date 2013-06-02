@@ -8,16 +8,18 @@ namespace THCard.Web.Controllers.Authentication {
 	public class AuthenticationController : ControllerBase {
 		private readonly ISession _session;
 		private readonly ISiteMap _siteMap;
-		private AuthenticationTempData _authTempData;
+		private readonly AuthenticationTempData _authTempData;
+		private readonly IUserAuthenticationService _userAuthenticationService;
 
-		public AuthenticationController(ISiteMap siteMap, ISession session, AuthenticationTempData authAuthTempData) {
+		public AuthenticationController(ISiteMap siteMap, ISession session, AuthenticationTempData authAuthTempData, IUserAuthenticationService userAuthenticationService) {
 			_siteMap = siteMap;
 			_session = session;
 			_authTempData = authAuthTempData;
+			_userAuthenticationService = userAuthenticationService;
 		}
 
 		private new AuthenticationTempData TempData {
-			get { return _authTempData ?? (_authTempData = new AuthenticationTempData(base.TempData)); }
+			get { return _authTempData; }
 		}
 
 		[HttpGet]
@@ -29,13 +31,14 @@ namespace THCard.Web.Controllers.Authentication {
 		[HttpPost]
 		public ActionResult Login(string username, string password) {
 			if (!_session.IsAuthenticated) {
-				LoginAttemptResult loginAttemptResult = _session.Login(new Username(username), new Password(password));
+				LoginAttemptResult loginAttemptResult = _userAuthenticationService.Authenticate(new Username(username), new Password(password));
 				if (!loginAttemptResult.Succeeded) {
 					var errorMessages = new ErrorMessages {GetLoginFailureMessage(loginAttemptResult)};
 					TempData.ErrorMessages.Store(errorMessages);
 					TempData.LoginReturnPage.Keep();
 					return RedirectToRoute(_siteMap.GetLoginPage());
 				}
+				_session.BeginAuthenticatedSession(loginAttemptResult.Account);
 			}
 			return RedirectToRoute(TempData.LoginReturnPage ?? _siteMap.GetLandingPage(_session.AuthenticatedAccount));
 		}
@@ -57,7 +60,7 @@ namespace THCard.Web.Controllers.Authentication {
 
 		public ActionResult Logout() {
 			if (_session.IsAuthenticated) {
-				_session.Logout();
+				_session.EndAuthenticatedSession();
 			}
 			return RedirectToRoute(_siteMap.GetPublicLandingPage());
 		}

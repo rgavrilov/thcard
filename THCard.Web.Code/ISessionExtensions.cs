@@ -15,12 +15,12 @@ namespace THCard.Web {
 
 
 		public static void RemoveRedirectUrl(this ISession session) {
-			session.Remove("redirectUrl");
+			session.RemoveValue("redirectUrl");
 		}
 
 		public static Uri GetRedirectUrl(this ISession session) {
 			var removeRedirectUrl = session.GetValue<Uri>("redirectUrl");
-			session.Remove("redirectUrl");
+			session.RemoveValue("redirectUrl");
 			return removeRedirectUrl;
 		}
 	}

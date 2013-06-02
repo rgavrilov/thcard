@@ -120,7 +120,9 @@
     <Compile Include="Infrastructure\ViewPresenterResult.cs" />
     <Compile Include="ISessionExtensions.cs" />
     <Compile Include="ISiteMap.cs" />
+    <Compile Include="IUserAuthenticationService.cs" />
     <Compile Include="JetBrainsAnnotations.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="SiteMap.cs" />
     <Compile Include="Controllers\LoginControl\LoginControlController.cs" />
     <Compile Include="Controllers\Authentication\Models\LoginViewModel.cs" />

@@ -58,6 +58,7 @@
     <Compile Include="AuthenticationControllerTest.cs" />
     <Compile Include="PageRoute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SiteMapMock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
