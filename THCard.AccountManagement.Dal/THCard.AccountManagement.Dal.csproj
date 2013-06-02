@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{21D113E2-9A41-4DED-BB6D-3E480CA79704}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>THCard.AccountManagement.Dal</RootNamespace>
+    <AssemblyName>THCard.AccountManagement.Dal</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Account.cs">
+      <DependentUpon>THCard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountPassword.cs">
+      <DependentUpon>THCard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountRepository.cs" />
+    <Compile Include="DbAccountSetExtensions.cs" />
+    <Compile Include="FailedLoginAttempt.cs">
+      <DependentUpon>THCard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>THCard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="THCard.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>THCard.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="THCard.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>THCard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="THCard.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>THCard.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>THCard.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="THCard.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>THCard.Context.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="THCard.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>THCard.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="THCard.edmx.diagram">
+      <DependentUpon>THCard.edmx</DependentUpon>
+    </None>
+    <None Include="THCard.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>THCard.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\THCard.AccountManagement\THCard.AccountManagement.csproj">
+      <Project>{727A9EEE-8D92-4471-A805-44AF03F2E2CE}</Project>
+      <Name>THCard.AccountManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\THCard.Common\THCard.Common.csproj">
+      <Project>{0F31E01B-5087-48DD-9448-CC8153164980}</Project>
+      <Name>THCard.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

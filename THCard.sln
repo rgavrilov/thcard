@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Web", "THCard.Web\THCard.Web.csproj", "{88D19564-6ABB-47A7-926B-B8A9013BD239}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Web.Code", "THCard.Web.Code\THCard.Web.Code.csproj", "{90569392-E7E5-4623-848F-F1F716C9C2B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.AccountManagement.Dal", "THCard.AccountManagement.Dal\THCard.AccountManagement.Dal.csproj", "{21D113E2-9A41-4DED-BB6D-3E480CA79704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.AccountManagement", "THCard.AccountManagement\THCard.AccountManagement.csproj", "{727A9EEE-8D92-4471-A805-44AF03F2E2CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.AccountManagement.Tests", "THCard.AccountManagement.Tests\THCard.AccountManagement.Tests.csproj", "{32198631-9347-4E89-ACE9-6AC95B171C78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Common", "THCard.Common\THCard.Common.csproj", "{0F31E01B-5087-48DD-9448-CC8153164980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Web.Tests", "THCard.Web.Tests\THCard.Web.Tests.csproj", "{FBCC51E4-2EA4-4026-849F-748CC888A2FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88D19564-6ABB-47A7-926B-B8A9013BD239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88D19564-6ABB-47A7-926B-B8A9013BD239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88D19564-6ABB-47A7-926B-B8A9013BD239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88D19564-6ABB-47A7-926B-B8A9013BD239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90569392-E7E5-4623-848F-F1F716C9C2B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90569392-E7E5-4623-848F-F1F716C9C2B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90569392-E7E5-4623-848F-F1F716C9C2B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90569392-E7E5-4623-848F-F1F716C9C2B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21D113E2-9A41-4DED-BB6D-3E480CA79704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21D113E2-9A41-4DED-BB6D-3E480CA79704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21D113E2-9A41-4DED-BB6D-3E480CA79704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21D113E2-9A41-4DED-BB6D-3E480CA79704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{727A9EEE-8D92-4471-A805-44AF03F2E2CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{727A9EEE-8D92-4471-A805-44AF03F2E2CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{727A9EEE-8D92-4471-A805-44AF03F2E2CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{727A9EEE-8D92-4471-A805-44AF03F2E2CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32198631-9347-4E89-ACE9-6AC95B171C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32198631-9347-4E89-ACE9-6AC95B171C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32198631-9347-4E89-ACE9-6AC95B171C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32198631-9347-4E89-ACE9-6AC95B171C78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F31E01B-5087-48DD-9448-CC8153164980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F31E01B-5087-48DD-9448-CC8153164980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F31E01B-5087-48DD-9448-CC8153164980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F31E01B-5087-48DD-9448-CC8153164980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBCC51E4-2EA4-4026-849F-748CC888A2FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBCC51E4-2EA4-4026-849F-748CC888A2FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBCC51E4-2EA4-4026-849F-748CC888A2FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBCC51E4-2EA4-4026-849F-748CC888A2FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

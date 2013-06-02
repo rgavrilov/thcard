@@ -1,0 +1,30 @@
+﻿@model THCard.Web.Controllers.Authentication.Models.LoginViewModel
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>title</title>
+	</head>
+	<body>
+		<div>
+			<ul>
+				@foreach (string errorMessage in Model.ErrorMessages) {
+					<li>@errorMessage</li>
+				}
+			</ul>
+		</div>
+		<div>
+			<form action="@Url.Action("Login", "Authentication")" method="POST">
+				<input type="text" name="username"/>
+				<input type="password" name="password"/>
+				<input type="checkbox" name="keepLoggedIn" value="true"/>
+				<input type="submit" value="Login"/>
+			</form>  
+		</div>
+	</body>
+</html>
