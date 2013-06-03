@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using JetBrains.Annotations;
+using MvcContrib;
 using Ninject;
 
 namespace THCard.Web.Infrastructure {
@@ -13,8 +16,9 @@ namespace THCard.Web.Infrastructure {
 			return Redirect(url.ToString());
 		}
 
-		protected ActionResult RedirectToAction<TController>(Expression<Action<TController>> action) where TController : Controller {
-			return MvcContrib.ControllerExtensions.RedirectToAction(this, action);
+		protected ActionResult RedirectToAction<TController>(Expression<Action<TController>> action)
+			where TController : Controller {
+			return ControllerExtensions.RedirectToAction(this, action);
 		}
 
 		[AspMvcView]

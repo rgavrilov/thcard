@@ -1,0 +1,41 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@model THCard.Web.Controllers.Account.Models.SignUpViewModel
+
+@{
+	Layout = "~/Views/Shared/_PublicLayout.cshtml";
+	ViewBag.Title = "Sign Up | Total Health Card";
+}
+
+<h3>Create a New Account</h3>
+
+<form method="POST">
+
+	<div class="field">
+		<label for="name">Name:</label>
+		<input type="text" name="name" data-val="true" data-val-required="Name is required."/>
+		<span data-valmsg-for="name" data-valmsg-replace="true"></span>
+	</div>
+
+	<div class="field">
+		<label for="name">Username:</label>
+		<input type="text" name="username" data-val="true" data-val-required="Username is required."/>
+		<span data-valmsg-for="username" data-valmsg-replace="true"></span>
+	</div>
+
+	<div class="field">
+		<label for="name">Password:</label>
+		<input type="password" name="password" data-val="true" data-val-required="Password is required."/>
+		<span data-valmsg-for="password" data-valmsg-replace="true"></span>
+	</div>
+		
+	<button type="submit">Submit</button>
+</form>
+
+
+<script src="~/Scripts/jquery-1.8.2.js"> </script>
+<script src="~/Scripts/jquery.validate.js"> </script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"> </script>

@@ -173,6 +173,8 @@
     <Content Include="Views\LoginControl\Authenticated.cshtml" />
     <Content Include="Views\LoginControl\_LoginControlLayout.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FullName.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
+    <Content Include="Views\Account\SignUpComplete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

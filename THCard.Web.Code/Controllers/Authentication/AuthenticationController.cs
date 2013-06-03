@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using THCard.AccountManagement;
 using THCard.Web.Controllers.Authentication.Models;
+using THCard.Web.Infrastructure;
 using ControllerBase = THCard.Web.Infrastructure.ControllerBase;
 
 namespace THCard.Web.Controllers.Authentication {

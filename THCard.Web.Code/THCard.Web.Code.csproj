@@ -104,9 +104,12 @@
   <ItemGroup>
     <Compile Include="ActionPath.cs" />
     <Compile Include="ApplicationRoles.cs" />
+    <Compile Include="Controllers\Account\AccountController.cs" />
+    <Compile Include="Controllers\Account\Models\SignUpViewModel.cs" />
     <Compile Include="Controllers\Authentication\AuthenticationController.cs" />
     <Compile Include="Controllers\Authentication\AuthenticationPresenter.cs" />
     <Compile Include="Controllers\Authentication\AuthenticationTempData.cs" />
+    <Compile Include="IAccountRegistrationService.cs" />
     <Compile Include="Infrastructure\AuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\TempDataValue.cs" />
     <Compile Include="Controllers\LoginControl\LoginControlPresenter.cs" />
