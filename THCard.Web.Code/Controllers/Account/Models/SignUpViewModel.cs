@@ -6,12 +6,13 @@ using System.Web;
 namespace THCard.Web.Controllers.Account.Models {
 	public class SignUpViewModel {
 		public AccountRegistrationInformation Information { get; set; }
+		public IEnumerable<string> Errors { get; set; }
 	}
 
 	public class AccountRegistrationInformation {
 		public string Name { get; set; }
 		public string Username { get; set; }
-		public string EMail { get; set; }
+		public string Email { get; set; }
 		public string EmailConfirmation { get; set; }
 		public string Password { get; set; }
 		public string PasswordConfirmation { get; set; }

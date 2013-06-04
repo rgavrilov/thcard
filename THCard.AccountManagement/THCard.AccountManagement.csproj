@@ -42,9 +42,11 @@
     <Compile Include="Account.cs" />
     <Compile Include="AccountId.cs" />
     <Compile Include="AccountRegistration.cs" />
+    <Compile Include="AccountRegistrationService.cs" />
     <Compile Include="AccountRole.cs" />
     <Compile Include="HashedPassword.cs" />
     <Compile Include="Credentials.cs" />
+    <Compile Include="IAccountRegistrationService.cs" />
     <Compile Include="IAccountRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Password.cs" />
