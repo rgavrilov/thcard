@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
-using Microsoft.Web.Mvc;
 using Ninject;
 using Ninject.Web.Common;
 using THCard.AccountManagement;
@@ -21,6 +23,7 @@ namespace THCard.Web {
 			      .ToConstant<IPresenterActivator>(new DelegatePresenterActivator(type => kernel.Get(type)));
 			kernel.Bind<IUserAuthenticationService>().To<UserAuthenticationService>();
 			kernel.Bind<IAccountRegistrationService>().To<AccountRegistrationService>();
+			kernel.Bind<IViewPageActivator>().ToConstant(new NinjectViewPageActivator(kernel)).InSingletonScope();
 
 			return kernel;
 		}
@@ -31,6 +34,19 @@ namespace THCard.Web {
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 
 			PresenterFactory.RegisterPresenters();
+		}
+	}
+
+	public class NinjectViewPageActivator : IViewPageActivator {
+		private readonly StandardKernel _kernel;
+
+		public NinjectViewPageActivator(StandardKernel kernel) {
+			_kernel = kernel;
+		}
+
+		public object Create(ControllerContext controllerContext, Type type) {
+			var o = _kernel.Get(type);
+			return o;
 		}
 	}
 }

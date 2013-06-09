@@ -1,18 +1,17 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace THCard.AccountManagement {
-
-	[DebuggerDisplay("{Username}:{HashedPassword.PasswordHash}#{HashedPassword.Salt} for {AccountId}")]
+	[DebuggerDisplay("{Username}:{HashedPassword}")]
 	public sealed class Credentials {
-		public Credentials(AccountId accountId, Username username, HashedPassword hashedPassword) {
-			
-			AccountId = accountId;
+		public Credentials(Username username, HashedPassword hashedPassword) {
 			Username = username;
 			HashedPassword = hashedPassword;
 		}
 
 		public Username Username { get; private set; }
 		public HashedPassword HashedPassword { get; private set; }
-		public AccountId AccountId { get; private set; }
 	}
 }

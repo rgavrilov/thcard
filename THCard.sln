@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Common", "THCard.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Web.Tests", "THCard.Web.Tests\THCard.Web.Tests.csproj", "{FBCC51E4-2EA4-4026-849F-748CC888A2FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Dal.Common", "THCard.Dal.Common\THCard.Dal.Common.csproj", "{7EEC4630-7BFC-4386-BAA1-BF58169471EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{FBCC51E4-2EA4-4026-849F-748CC888A2FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBCC51E4-2EA4-4026-849F-748CC888A2FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBCC51E4-2EA4-4026-849F-748CC888A2FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EEC4630-7BFC-4386-BAA1-BF58169471EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EEC4630-7BFC-4386-BAA1-BF58169471EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EEC4630-7BFC-4386-BAA1-BF58169471EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EEC4630-7BFC-4386-BAA1-BF58169471EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

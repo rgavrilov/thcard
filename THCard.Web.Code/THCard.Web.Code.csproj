@@ -102,9 +102,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionPath.cs" />
     <Compile Include="ApplicationRoles.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
+    <Compile Include="Controllers\Account\AccountControllerTempData.cs" />
+    <Compile Include="Controllers\Account\AccountPresenter.cs" />
+    <Compile Include="Controllers\Account\Models\AccountRegistration.cs" />
     <Compile Include="Controllers\Account\Models\SignUpViewModel.cs" />
     <Compile Include="Controllers\Authentication\AuthenticationController.cs" />
     <Compile Include="Controllers\Authentication\AuthenticationPresenter.cs" />
@@ -155,6 +157,10 @@
     <ProjectReference Include="..\THCard.Common\THCard.Common.csproj">
       <Project>{0F31E01B-5087-48DD-9448-CC8153164980}</Project>
       <Name>THCard.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\THCard.Dal.Common\THCard.Dal.Common.csproj">
+      <Project>{7EEC4630-7BFC-4386-BAA1-BF58169471EA}</Project>
+      <Name>THCard.Dal.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

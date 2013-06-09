@@ -3,21 +3,39 @@
 @using System
 @using System.Collections.Generic
 @using System.Linq
+@using System.Linq.Expressions
+@using THCard.Web.Controllers.Account.Models
 @model THCard.Web.Controllers.Account.Models.SignUpViewModel
 
 @{
 	Layout = "~/Views/Shared/_PublicLayout.cshtml";
 	ViewBag.Title = "Sign Up | Total Health Card";
+
+	foreach (KeyValuePair<string, ModelState> modelState in Model.ModelState.Where(ms => ms.Value.Errors.Any())) {
+		ViewData.ModelState.AddModelError(modelState.Key, modelState.Value.Errors.First().ErrorMessage);
+	}
 }
 
 <h3>Create a New Account</h3>
 
 <form method="POST">
+	
+	@Html.TextBoxFor(m=>m.Information.FirstName)
+	@{
+		var name = ExpressionHelper.GetExpressionText((Expression<Func<SignUpViewModel, string>>)((SignUpViewModel m) => m.Information.FirstName));
+		Html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
+	}
 
 	<div class="field">
-		<label for="name">Name:</label>
-		<input type="text" name="name" data-val="true" data-val-required="Name is required."/>
-		<span data-valmsg-for="name" data-valmsg-replace="true"></span>
+		<label for="name">First Name:</label>
+		<input type="text" name="firstName" data-val="true" data-val-required="First name is required."/>
+		<span data-valmsg-for="firstName" data-valmsg-replace="true"></span>
+	</div>
+
+	<div class="field">
+		<label for="name">Last Name:</label>
+		<input type="text" name="lastName" data-val="true" data-val-required="Last name is required."/>
+		<span data-valmsg-for="lastName" data-valmsg-replace="true"></span>
 	</div>
 
 	<div class="field">
@@ -29,6 +47,12 @@
 	<div class="field">
 		<label for="name">Password:</label>
 		<input type="password" name="password" data-val="true" data-val-required="Password is required."/>
+		<span data-valmsg-for="password" data-valmsg-replace="true"></span>
+	</div>
+		
+	<div class="field">
+		<label for="name">Password Confirmation:</label>
+		<input type="password" name="passwordConfirmation" data-val="true" data-val-required="Password is required."/>
 		<span data-valmsg-for="password" data-valmsg-replace="true"></span>
 	</div>
 		

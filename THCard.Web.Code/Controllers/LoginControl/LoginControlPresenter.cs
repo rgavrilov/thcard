@@ -14,7 +14,7 @@ namespace THCard.Web.Controllers.LoginControl {
 		}
 
 		public AuthenticatedLoginControlViewModel Authenticated(AccountManagement.Account account) {
-			User user = _userRepository.GetUser(account.UserId);
+			User user = _userRepository.GetUser(account.AccountId);
 			var viewModel = new AuthenticatedLoginControlViewModel(user.FullName, _siteMap.GetLandingPage(account));
 			return viewModel;
 		}

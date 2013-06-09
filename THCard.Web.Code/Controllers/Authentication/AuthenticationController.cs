@@ -7,21 +7,18 @@ using ControllerBase = THCard.Web.Infrastructure.ControllerBase;
 
 namespace THCard.Web.Controllers.Authentication {
 	public class AuthenticationController : ControllerBase {
-		private readonly AuthenticationTempData _authTempData;
 		private readonly ISession _session;
 		private readonly ISiteMap _siteMap;
 		private readonly IUserAuthenticationService _userAuthenticationService;
 
-		public AuthenticationController(ISiteMap siteMap, ISession session, AuthenticationTempData authAuthTempData,
-		                                IUserAuthenticationService userAuthenticationService) {
+		public AuthenticationController(ISiteMap siteMap, ISession session, IUserAuthenticationService userAuthenticationService) {
 			_siteMap = siteMap;
 			_session = session;
-			_authTempData = authAuthTempData;
 			_userAuthenticationService = userAuthenticationService;
 		}
 
 		private new AuthenticationTempData TempData {
-			get { return _authTempData; }
+			get { return new AuthenticationTempData(base.TempData); }
 		}
 
 		[HttpGet]
@@ -39,7 +36,7 @@ namespace THCard.Web.Controllers.Authentication {
 					var errorMessages = new ErrorMessages {GetLoginFailureMessage(loginAttemptResult)};
 					TempData.ErrorMessages.Store(errorMessages);
 					TempData.LoginReturnPage.Keep();
-					return RedirectToRoute(_siteMap.GetLoginPage());
+					return RedirectToRoute(_siteMap.LoginPage);
 				}
 				_session.BeginAuthenticatedSession(loginAttemptResult.Account);
 			}
@@ -64,7 +61,7 @@ namespace THCard.Web.Controllers.Authentication {
 		[HttpPost]
 		public ActionResult Logout() {
 			_session.EndAuthenticatedSession();
-			return RedirectToRoute(_siteMap.GetPublicLandingPage());
+			return RedirectToRoute(_siteMap.PublicLandingPage);
 		}
 	}
 }

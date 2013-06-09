@@ -1,4 +1,10 @@
-﻿namespace THCard.AccountManagement {
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+
+namespace THCard.AccountManagement {
+	[DebuggerDisplay("{PasswordHasd}#{Salt}")]
 	public sealed class HashedPassword {
 		public HashedPassword(string passwordHash, string salt) {
 			PasswordHash = passwordHash;
@@ -16,8 +22,7 @@
 		}
 
 		public static HashedPassword Create(Password password, PasswordHashAlgorithm hashAlgorithm,
-		                                    PasswordHashSaltGenerator saltGenerator) {
-			string salt = saltGenerator();
+		                                    string salt) {
 			return new HashedPassword(Hash(password, hashAlgorithm, salt), salt);
 		}
 
@@ -25,8 +30,4 @@
 			return hashAlgorithm(password.ToString(), salt);
 		}
 	}
-
-	public delegate string PasswordHashAlgorithm(string password, string salt);
-
-	public delegate string PasswordHashSaltGenerator();
 }

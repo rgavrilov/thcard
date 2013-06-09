@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace THCard.AccountManagement {
 	[DebuggerStepThrough]
@@ -26,11 +28,11 @@ namespace THCard.AccountManagement {
 			if (ReferenceEquals(this, obj)) {
 				return true;
 			}
-			var otherPassword = obj as Password;
-			if (otherPassword != null) {
-				return string.Equals(_password, otherPassword._password, StringComparison.Ordinal);
+			if (ReferenceEquals(null, obj)) {
+				return false;
 			}
-			return false;
+			return obj is Password &&
+			       string.Equals(_password, ((Password) obj)._password, StringComparison.Ordinal);
 		}
 	}
 }

@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace THCard.Web.Infrastructure {
 	public sealed class TempDataValue<T> {
@@ -21,6 +24,10 @@ namespace THCard.Web.Infrastructure {
 
 		public T Get() {
 			return (T) _tempData[Key];
+		}
+
+		public T Get(T defaultValue) {
+			return Stored ? Get() : defaultValue;
 		}
 
 		public void Store(T value) {

@@ -1,25 +1,37 @@
-﻿namespace THCard.AccountManagement {
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using System.Linq;
+
+namespace THCard.AccountManagement {
+	[DebuggerDisplay("{Username}#{AccountId}")]
 	public sealed class Account {
 		private readonly AccountRoles _roles;
-		private readonly Username _username;
+		private AccountId _accountId;
 
-		public Account(AccountId accountId, Username username, UserId userId, AccountRoles roles) {
-			UserId = userId;
+		public Account(AccountId accountId, Username username, AccountRoles roles) {
+			Contract.Requires(accountId != null);
+			Contract.Requires(username != null);
+			Contract.Requires(roles != null);
+
 			AccountId = accountId;
-			_username = username;
+			Username = username;
 			_roles = roles;
 		}
 
-		public AccountId AccountId { get; private set; }
+		public AccountId AccountId {
+			get { return _accountId; }
+			set {
+				Contract.Requires(_accountId.IsNew && value != null && !value.IsNew);
+				_accountId = value;
+			}
+		}
 
-		public UserId UserId { get; private set; }
+		public Username Username { get; private set; }
 
 		public bool IsInRole(AccountRole role) {
 			return _roles.Matches(role);
-		}
-
-		public override string ToString() {
-			return _username.ToString();
 		}
 	}
 }

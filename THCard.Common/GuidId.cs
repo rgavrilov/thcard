@@ -1,15 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace THCard.Common {
 	[DebuggerDisplay("{_itemType} #{_id}")]
-	public abstract class GuidId : IEquatable<GuidId> {
+	public abstract class GuidId : IdBase, IEquatable<GuidId> {
 		private readonly Guid _id;
 		private readonly string _itemType;
 
 		protected GuidId(Guid id, string itemType) {
 			_id = id;
 			_itemType = itemType;
+		}
+
+		public override bool IsNew {
+			get { return _id == Guid.Empty; }
 		}
 
 		public bool Equals(GuidId other) {

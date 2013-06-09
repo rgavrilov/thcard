@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace THCard.Common {
-	public abstract class Id : IEquatable<Id> {
+
+	public abstract class IdBase {
+		public abstract bool IsNew { get; }
+	}
+
+	[DebuggerDisplay("{0}#{1}")]
+	public abstract class Id : IdBase, IEquatable<Id> {
 		private readonly string _internalId;
 		private readonly string _itemType;
 
 		protected Id(string id, string itemType) {
 			_internalId = id;
 			_itemType = itemType;
-		}
-
-		protected string InternalId {
-			get { return _internalId; }
 		}
 
 		public bool Equals(Id other) {
@@ -23,7 +28,7 @@ namespace THCard.Common {
 		}
 
 		public override bool Equals(object other) {
-			return this.Equals(other as Id);
+			return Equals(other as Id);
 		}
 
 		public override int GetHashCode() {
@@ -31,7 +36,7 @@ namespace THCard.Common {
 		}
 
 		public override string ToString() {
-			return string.Format("{0} #{1}", _itemType, _internalId);
+			return _internalId;
 		}
 	}
 }

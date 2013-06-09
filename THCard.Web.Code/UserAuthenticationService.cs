@@ -1,4 +1,7 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using THCard.AccountManagement;
 
 namespace THCard.Web {
@@ -13,18 +16,18 @@ namespace THCard.Web {
 			Contract.Ensures(Contract.Result<LoginAttemptResult>().Succeeded == false ||
 			                 Contract.Result<LoginAttemptResult>().Account != null);
 
-			Credentials credentials = _accountRepository.GetAccountCredentials(username);
-			if (credentials == null) {
+			Account account = _accountRepository.FindAccount(username);
+			if (account == null) {
 				return LoginAttemptResult.UsernameNotFound();
 			}
 
-			bool passwordMatches = credentials.HashedPassword.Matches(password, (value, salt) => value + salt);
+			HashedPassword accountPassword = _accountRepository.GetAccountPassword(account.AccountId);
+
+			bool passwordMatches = accountPassword.Matches(password, (value, salt) => value + salt);
 			if (!passwordMatches) {
-				int failedLoginAttemptCount = _accountRepository.IncrementFailedLoginAttemptCount(credentials.AccountId);
+				int failedLoginAttemptCount = _accountRepository.IncrementFailedLoginAttemptCount(account.AccountId);
 				return LoginAttemptResult.IncorrectPassword(failedLoginAttemptCount);
 			}
-
-			Account account = _accountRepository.GetAccount(credentials.AccountId);
 
 			return LoginAttemptResult.Success(account);
 		}

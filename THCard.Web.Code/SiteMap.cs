@@ -1,6 +1,7 @@
 ﻿using System.Web.Routing;
 using Microsoft.Web.Mvc.Internal;
 using THCard.AccountManagement;
+using THCard.Web.Controllers.Account;
 using THCard.Web.Controllers.Authentication;
 using THCard.Web.Controllers.Home;
 using THCard.Web.Controllers.Member;
@@ -12,16 +13,20 @@ namespace THCard.Web {
 				return ExpressionHelper.GetRouteValuesFromExpression<MemberController>(c => c.Dashboard());
 			}
 			else {
-				return GetPublicLandingPage();
+				return PublicLandingPage;
 			}
 		}
 
-		public RouteValueDictionary GetPublicLandingPage() {
-			return ExpressionHelper.GetRouteValuesFromExpression<HomeController>(c => c.Index());
+		public RouteValueDictionary PublicLandingPage {
+			get { return ExpressionHelper.GetRouteValuesFromExpression<HomeController>(c => c.Index()); }
 		}
 
-		public RouteValueDictionary GetLoginPage() {
-			return ExpressionHelper.GetRouteValuesFromExpression<AuthenticationController>(c => c.Login());
+		public RouteValueDictionary LoginPage {
+			get { return ExpressionHelper.GetRouteValuesFromExpression<AuthenticationController>(c => c.Login()); }
+		}
+
+		public RouteValueDictionary SignUpPage {
+			get { return ExpressionHelper.GetRouteValuesFromExpression<AccountController>(c => c.SignUp()); }
 		}
 	}
 }

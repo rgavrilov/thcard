@@ -13,7 +13,7 @@ namespace THCard.Web.Infrastructure {
 			var authenticationControllerTempData = new AuthenticationTempData(filterContext.Controller.TempData);
 			RouteValueDictionary returnPage = filterContext.RouteData.Values;
 			authenticationControllerTempData.LoginReturnPage.Store(returnPage);
-			filterContext.Result = new RedirectToRouteResult(SiteMap.GetLoginPage());
+			filterContext.Result = new RedirectToRouteResult(SiteMap.LoginPage);
 		}
 	}
 }

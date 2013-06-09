@@ -1,38 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Transactions;
+using THCard.Dal.Common;
 
 namespace THCard.AccountManagement.Dal {
-	public class AccountRepository : IAccountRepository {
-		Credentials IAccountRepository.GetAccountCredentials(Username username) {
+	public class AccountRepository : RepositoryBase, IAccountRepository {
+		public AccountManagement.Account FindAccount(Username username) {
 			using (var db = new THCard()) {
-				string usernameAsString = username.ToString();
-				IQueryable<Account> dbAccountQuery = db.Accounts.Where(a => a.Username == usernameAsString);
-				var dbCredentials = 
-					dbAccountQuery
-						.Join(
-							db.AccountPasswords, 
-							a => a.AccountId, 
-							ap => ap.AccountId,
-							(account, accountPassword) => new {Account = account, AccountPassword = accountPassword})
-						.FirstOrDefault();
-				if (dbCredentials == null) return null;
-				Credentials credentials = BuildCredentials(dbCredentials.Account, dbCredentials.AccountPassword);
-				return credentials;
+				Account dbAccount = FindAccountByUsername(username, db);
+				if (dbAccount == null) {
+					return null;
+				}
+				return MapAccount(dbAccount);
 			}
-		}
-
-		private Credentials BuildCredentials(Account account, AccountPassword accountPassword) {
-			return new Credentials(new AccountId(account.AccountId), new Username(account.Username), new HashedPassword(accountPassword.PasswordHash.TrimEnd(), accountPassword.Salt.TrimEnd()));
 		}
 
 		public AccountManagement.Account GetAccount(AccountId accountId) {
 			using (var db = new THCard()) {
 				Account dbAccount = FindAccountById(db, accountId.ToGuid());
 				if (dbAccount != null) {
-					return BuildAccountFromDBAccount(dbAccount);
+					return MapAccount(dbAccount);
 				}
 				else {
 					return null;
@@ -40,35 +29,12 @@ namespace THCard.AccountManagement.Dal {
 			}
 		}
 
-		private static Account FindAccountById(THCard db, Guid accountId) {
-			Account dbAccount = db.Accounts.SingleOrDefault(a => a.AccountId == accountId);
-			return dbAccount;
-		}
-
-		public AccountManagement.Account CreateAccount(AccountRegistration accountRegistration) {
-			using (var db = new THCard()) {
-				using (
-					var transaction = new TransactionScope()) {
-					Account dbAccount = db.Accounts.Add(new Account {
-						Username = accountRegistration.Username.ToString(),
-						AccountPassword =
-							new AccountPassword {
-								PasswordHash = accountRegistration.HashedPassword.ToString(),
-								Salt = accountRegistration.HashedPassword.Salt
-							}
-					});
-					db.SaveChanges();
-					transaction.Complete();
-					return BuildAccountFromDBAccount(dbAccount);
-				}
-			}
-		}
-
 		public int IncrementFailedLoginAttemptCount(AccountId accountId) {
 			using (var db = new THCard()) {
-				using (
-					var transaction = new TransactionScope(TransactionScopeOption.Required,
-					                                       new TransactionOptions {IsolationLevel = IsolationLevel.RepeatableRead})) {
+				using (var transaction = new TransactionScope(TransactionScopeOption.Required,
+				                                              new TransactionOptions {
+					                                              IsolationLevel = IsolationLevel.RepeatableRead
+				                                              })) {
 					FailedLoginAttempt dbFailedLoginAttempt = FindFailedLoginAttempt(db, accountId.ToGuid());
 					if (dbFailedLoginAttempt == null) {
 						db.FailedLoginAttempts.Add(new FailedLoginAttempt {AccountId = accountId.ToGuid(), FailedLoginAttemptCount = 0});
@@ -86,16 +52,62 @@ namespace THCard.AccountManagement.Dal {
 			}
 		}
 
+		public void SaveAccount(AccountManagement.Account account) {
+			throw new NotImplementedException();
+		}
+
+		public void CreateAccount(AccountManagement.Account account, HashedPassword hashedPassword, UserId userId) {
+			Contract.Assert(account.AccountId.IsNew);
+			using (var db = new THCard()) {
+				using (var transaction = new TransactionScope()) {
+					var dbAccount = new Account {
+						Username = account.Username.ToString(),
+						UserId = userId.ToGuid(),
+						AccountPassword = new AccountPassword {
+							PasswordHash = hashedPassword.PasswordHash,
+							Salt = hashedPassword.Salt
+						}
+					};
+					db.Accounts.Add(dbAccount);
+					db.SaveChanges();
+					transaction.Complete();
+					account.AccountId = new AccountId(dbAccount.AccountId);
+				}
+			}
+		}
+
+		public HashedPassword GetAccountPassword(AccountId accountId) {
+			using (var db = new THCard()) {
+				Account dbAccount = db.Accounts.Find(accountId);
+				AssertFound(dbAccount);
+				return MapToHashedPassword(dbAccount);
+			}
+		}
+
+		private static HashedPassword MapToHashedPassword(Account dbAccount) {
+			return new HashedPassword(dbAccount.AccountPassword.PasswordHash.TrimEnd(), dbAccount.AccountPassword.Salt.TrimEnd());
+		}
+
+		private static Account FindAccountByUsername(Username username, THCard db) {
+			string usernameAsString = username.ToString();
+			return db.Accounts.FirstOrDefault(a => a.Username == usernameAsString);
+		}
+
+		private static Account FindAccountById(THCard db, Guid accountId) {
+			Account dbAccount = db.Accounts.SingleOrDefault(a => a.AccountId == accountId);
+			return dbAccount;
+		}
+
 		private static FailedLoginAttempt FindFailedLoginAttempt(THCard db, Guid accountId) {
 			return db.FailedLoginAttempts.SingleOrDefault(fla => fla.AccountId == accountId);
 		}
 
-		private static AccountManagement.Account BuildAccountFromDBAccount(Account dbAccount) {
-			AccountRoles roles = new AccountRoles(dbAccount.Roles.Select(BuildRoleFromDBRole));
-			return new AccountManagement.Account(new AccountId(dbAccount.AccountId), new Username(dbAccount.Username), new UserId(dbAccount.UserId), roles);
+		private static AccountManagement.Account MapAccount(Account dbAccount) {
+			var roles = new AccountRoles(dbAccount.Roles.Select(BuildRoleFromDBRole));
+			return new AccountManagement.Account(new AccountId(dbAccount.AccountId), new Username(dbAccount.Username), roles);
 		}
 
-		private static AccountRole BuildRoleFromDBRole(Dal.Role dbRole) {
+		private static AccountRole BuildRoleFromDBRole(Role dbRole) {
 			throw new NotImplementedException();
 		}
 	}

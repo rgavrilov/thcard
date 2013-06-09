@@ -44,12 +44,14 @@
     <Compile Include="AccountRegistration.cs" />
     <Compile Include="AccountRegistrationService.cs" />
     <Compile Include="AccountRole.cs" />
+    <Compile Include="EmailAddress.cs" />
     <Compile Include="HashedPassword.cs" />
     <Compile Include="Credentials.cs" />
     <Compile Include="IAccountRegistrationService.cs" />
     <Compile Include="IAccountRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Password.cs" />
+    <Compile Include="PasswordHashAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleName.cs" />
     <Compile Include="Username.cs" />

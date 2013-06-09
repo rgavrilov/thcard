@@ -113,6 +113,10 @@
       <Project>{0F31E01B-5087-48DD-9448-CC8153164980}</Project>
       <Name>THCard.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\THCard.Dal.Common\THCard.Dal.Common.csproj">
+      <Project>{7EEC4630-7BFC-4386-BAA1-BF58169471EA}</Project>
+      <Name>THCard.Dal.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

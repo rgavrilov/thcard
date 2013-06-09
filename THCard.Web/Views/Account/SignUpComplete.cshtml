@@ -1,8 +1,13 @@
-﻿@model dynamic
+﻿@using System
+@using System.Collections.Generic
+@using System.Linq
+@model THCard.AccountManagement.Username
 
 @{
 	ViewBag.Title = "Signed Up | Total Health Card";
 	Layout = "~/Views/Shared/_PublicLayout.cshtml";
 }
 
-<h2>Done.</h2>
+<div>An account with username <span>@Model</span> has been successfully created.</div>
+
+<div>You can <a href="@Url.RouteUrl(SiteMap.LoginPage)">login now</a>.</div>
