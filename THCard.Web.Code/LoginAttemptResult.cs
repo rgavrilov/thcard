@@ -3,10 +3,6 @@ using System.Diagnostics.Contracts;
 using THCard.AccountManagement;
 
 namespace THCard.Web {
-	public abstract class AuthenticationResult {
-		
-	}
-
 	public sealed class LoginAttemptResult {
 		private Account _account;
 		private int _failedAttemptCount;
