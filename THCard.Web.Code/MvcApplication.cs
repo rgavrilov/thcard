@@ -36,17 +36,4 @@ namespace THCard.Web {
 			PresenterFactory.RegisterPresenters();
 		}
 	}
-
-	public class NinjectViewPageActivator : IViewPageActivator {
-		private readonly StandardKernel _kernel;
-
-		public NinjectViewPageActivator(StandardKernel kernel) {
-			_kernel = kernel;
-		}
-
-		public object Create(ControllerContext controllerContext, Type type) {
-			var o = _kernel.Get(type);
-			return o;
-		}
-	}
 }

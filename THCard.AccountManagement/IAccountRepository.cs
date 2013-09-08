@@ -8,7 +8,7 @@ namespace THCard.AccountManagement {
 		Account GetAccount(AccountId accountId);
 		void SaveAccount(Account account);
 		int IncrementFailedLoginAttemptCount(AccountId accountId);
-		void CreateAccount(Account account, HashedPassword hashedPassword, UserId userId);
-		HashedPassword GetAccountPassword(AccountId accountId);
+		void CreateAccount(Account account, SaltedHash passwordHash, UserId userId);
+		SaltedHash GetAccountPassword(AccountId accountId);
 	}
 }

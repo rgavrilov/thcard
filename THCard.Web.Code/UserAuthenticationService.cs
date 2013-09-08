@@ -21,9 +21,9 @@ namespace THCard.Web {
 				return LoginAttemptResult.UsernameNotFound();
 			}
 
-			HashedPassword accountPassword = _accountRepository.GetAccountPassword(account.AccountId);
+			SaltedHash accountPasswordHash = _accountRepository.GetAccountPassword(account.AccountId);
 
-			bool passwordMatches = accountPassword.Matches(password, (value, salt) => value + salt);
+			bool passwordMatches = new Hasher().Matches(password.ToString(), accountPasswordHash);
 			if (!passwordMatches) {
 				int failedLoginAttemptCount = _accountRepository.IncrementFailedLoginAttemptCount(account.AccountId);
 				return LoginAttemptResult.IncorrectPassword(failedLoginAttemptCount);

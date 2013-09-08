@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRoles.cs" />
+    <Compile Include="AssetManager.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
     <Compile Include="Controllers\Account\AccountControllerTempData.cs" />
     <Compile Include="Controllers\Account\AccountPresenter.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="ISiteMap.cs" />
     <Compile Include="IUserAuthenticationService.cs" />
     <Compile Include="JetBrainsAnnotations.cs" />
+    <Compile Include="NinjectViewPageActivator.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SiteMap.cs" />
     <Compile Include="Controllers\LoginControl\LoginControlController.cs" />

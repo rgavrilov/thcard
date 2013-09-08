@@ -31,6 +31,8 @@ namespace THCard.Web.Controllers.Account {
 				                                    ? new[] {TempData.RegistrationFailureReason.Get()}
 				                                    : new RegistrationFailureReason[0];
 			result.AccountRegistration = TempData.AccountRegistrationInformation.Get();
+			TempData.AccountRegistrationInformation.Keep();
+			TempData.RegistrationFailureReason.Keep();
 			return Result(result);
 		}
 
@@ -49,6 +51,13 @@ namespace THCard.Web.Controllers.Account {
 			var passwordConfirmation = new Password(information.PasswordConfirmation);
 			if (!password.Equals(passwordConfirmation)) {
 				TempData.RegistrationFailureReason.Store(RegistrationFailureReason.PasswordsDoNotMatch);
+				return RedirectToAction<AccountController>(c => c.SignUp());
+			}
+
+			var emailAddress = new EmailAddress(information.Email);
+			var emailAddressConfirmation = new EmailAddress(information.EmailConfirmation);
+			if (!emailAddress.Equals(emailAddressConfirmation)) {
+				TempData.RegistrationFailureReason.Store(RegistrationFailureReason.EmailsDoNotMatch);
 				return RedirectToAction<AccountController>(c => c.SignUp());
 			}
 

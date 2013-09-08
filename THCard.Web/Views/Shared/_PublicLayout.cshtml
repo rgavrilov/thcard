@@ -53,7 +53,9 @@
 	<link rel="stylesheet" href="/templates/totalhealthcardv1/css/jskeleton.css" type="text/css" />
 	<link rel="stylesheet" href="/templates/totalhealthcardv1/css/template.css" type="text/css" />
         
-
+	@foreach(var style in THCard.Web.AssetManager.RegisteredStyles) {
+		<link rel="stylesheet" href="@style" type="text/css" />
+	}
 </head>
 
 <body>

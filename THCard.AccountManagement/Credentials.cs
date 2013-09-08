@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 
 namespace THCard.AccountManagement {
-	[DebuggerDisplay("{Username}:{HashedPassword}")]
+	[DebuggerDisplay("{Username}:{PasswordHash}")]
 	public sealed class Credentials {
-		public Credentials(Username username, HashedPassword hashedPassword) {
+		public Credentials(Username username, SaltedHash passwordHashHash) {
 			Username = username;
-			HashedPassword = hashedPassword;
+			PasswordHash = passwordHashHash;
 		}
 
 		public Username Username { get; private set; }
-		public HashedPassword HashedPassword { get; private set; }
+		public SaltedHash PasswordHash { get; private set; }
 	}
 }

@@ -56,7 +56,7 @@ namespace THCard.AccountManagement.Dal {
 			throw new NotImplementedException();
 		}
 
-		public void CreateAccount(AccountManagement.Account account, HashedPassword hashedPassword, UserId userId) {
+		public void CreateAccount(AccountManagement.Account account, SaltedHash passwordHash, UserId userId) {
 			Contract.Assert(account.AccountId.IsNew);
 			using (var db = new THCard()) {
 				using (var transaction = new TransactionScope()) {
@@ -64,8 +64,8 @@ namespace THCard.AccountManagement.Dal {
 						Username = account.Username.ToString(),
 						UserId = userId.ToGuid(),
 						AccountPassword = new AccountPassword {
-							PasswordHash = hashedPassword.PasswordHash,
-							Salt = hashedPassword.Salt
+							PasswordHash = passwordHash.Hash,
+							Salt = passwordHash.Salt
 						}
 					};
 					db.Accounts.Add(dbAccount);
@@ -76,7 +76,7 @@ namespace THCard.AccountManagement.Dal {
 			}
 		}
 
-		public HashedPassword GetAccountPassword(AccountId accountId) {
+		public SaltedHash GetAccountPassword(AccountId accountId) {
 			using (var db = new THCard()) {
 				Account dbAccount = db.Accounts.Find(accountId);
 				AssertFound(dbAccount);
@@ -84,8 +84,8 @@ namespace THCard.AccountManagement.Dal {
 			}
 		}
 
-		private static HashedPassword MapToHashedPassword(Account dbAccount) {
-			return new HashedPassword(dbAccount.AccountPassword.PasswordHash.TrimEnd(), dbAccount.AccountPassword.Salt.TrimEnd());
+		private static SaltedHash MapToHashedPassword(Account dbAccount) {
+			return new SaltedHash(dbAccount.AccountPassword.PasswordHash.TrimEnd(), dbAccount.AccountPassword.Salt.TrimEnd());
 		}
 
 		private static Account FindAccountByUsername(Username username, THCard db) {

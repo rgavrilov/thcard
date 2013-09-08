@@ -45,7 +45,7 @@
     <Compile Include="AccountRegistrationService.cs" />
     <Compile Include="AccountRole.cs" />
     <Compile Include="EmailAddress.cs" />
-    <Compile Include="HashedPassword.cs" />
+    <Compile Include="SaltedHash.cs" />
     <Compile Include="Credentials.cs" />
     <Compile Include="IAccountRegistrationService.cs" />
     <Compile Include="IAccountRepository.cs" />

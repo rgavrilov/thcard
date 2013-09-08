@@ -22,10 +22,9 @@ namespace THCard.AccountManagement {
 		public void CreateAccount(AccountRegistration accountRegistration) {
 			var user = new User(UserId.New, accountRegistration.FullName);
 			_userRepository.CreateUser(user);
-			HashedPassword hashedPassword = HashedPassword.Create(accountRegistration.Password,
-			                                                      (password, salt) => password + salt, "1234");
+			SaltedHash passwordHash = new Hasher().Hash(accountRegistration.Password.ToString());
 			_accountRepository.CreateAccount(new Account(AccountId.New, accountRegistration.Username, new AccountRoles()),
-			                                 hashedPassword, user.Id);
+			                                 passwordHash, user.Id);
 		}
 	}
 }

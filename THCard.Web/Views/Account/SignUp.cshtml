@@ -3,9 +3,8 @@
 @using System
 @using System.Collections.Generic
 @using System.Linq
-@using System.Linq.Expressions
 @using THCard.Web.Controllers.Account.Models
-@model THCard.Web.Controllers.Account.Models.SignUpViewModel
+@model SignUpViewModel
 
 @{
 	Layout = "~/Views/Shared/_PublicLayout.cshtml";
@@ -16,44 +15,53 @@
 	}
 }
 
+@{
+	THCard.Web.AssetManager.RequireStyle("~/blah.css");
+}
+
 <h3>Create a New Account</h3>
+
+@helper ErrorFor(string key) {
+	ModelState value;
+	if (ViewData.ModelState.TryGetValue(key, out value)) {
+		<ul>
+			@foreach (ModelError error in value.Errors) {
+				<li>@error.ErrorMessage</li>
+			}
+		</ul>
+	}
+}
 
 <form method="POST">
 	
-	@Html.TextBoxFor(m=>m.Information.FirstName)
-	@{
-		var name = ExpressionHelper.GetExpressionText((Expression<Func<SignUpViewModel, string>>)((SignUpViewModel m) => m.Information.FirstName));
-		Html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
-	}
-
 	<div class="field">
 		<label for="name">First Name:</label>
-		<input type="text" name="firstName" data-val="true" data-val-required="First name is required."/>
+		<input type="text" name="firstName" data-val="true" data-val-required="First name is required." value="@Guid.NewGuid().ToString()"/>
 		<span data-valmsg-for="firstName" data-valmsg-replace="true"></span>
 	</div>
 
 	<div class="field">
 		<label for="name">Last Name:</label>
-		<input type="text" name="lastName" data-val="true" data-val-required="Last name is required."/>
+		<input type="text" name="lastName" data-val="true" data-val-required="Last name is required." value="@Guid.NewGuid().ToString()"/>
 		<span data-valmsg-for="lastName" data-valmsg-replace="true"></span>
 	</div>
 
 	<div class="field">
 		<label for="name">Username:</label>
-		<input type="text" name="username" data-val="true" data-val-required="Username is required."/>
+		<input type="text" name="username" data-val="true" data-val-required="Username is required." value="@Guid.NewGuid().ToString()"/>
 		<span data-valmsg-for="username" data-valmsg-replace="true"></span>
 	</div>
 
 	<div class="field">
 		<label for="name">Password:</label>
-		<input type="password" name="password" data-val="true" data-val-required="Password is required."/>
+		<input type="password" name="password" data-val="true" data-val-required="Password is required." value="@Guid.NewGuid().ToString()"/>
 		<span data-valmsg-for="password" data-valmsg-replace="true"></span>
 	</div>
 		
 	<div class="field">
 		<label for="name">Password Confirmation:</label>
-		<input type="password" name="passwordConfirmation" data-val="true" data-val-required="Password is required."/>
-		<span data-valmsg-for="password" data-valmsg-replace="true"></span>
+		<input type="password" name="passwordConfirmation" data-val="true" data-val-required="Password is required." value="@Guid.NewGuid().ToString()"/>
+		<span data-valmsg-for="password" data-valmsg-replace="true">@Html.ValidationMessage("passwordConfirmation")</span>
 	</div>
 		
 	<button type="submit">Submit</button>
