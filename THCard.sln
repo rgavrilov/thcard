@@ -17,6 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Web.Tests", "THCard.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "THCard.Dal.Common", "THCard.Dal.Common\THCard.Dal.Common.csproj", "{7EEC4630-7BFC-4386-BAA1-BF58169471EA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JetBrains", "JetBrains", "{8CA5D85D-7781-48D5-B7C4-E62201928EF2}"
+	ProjectSection(SolutionItems) = preProject
+		JetBrains\JetBrainsAnnotations.cs = JetBrains\JetBrainsAnnotations.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

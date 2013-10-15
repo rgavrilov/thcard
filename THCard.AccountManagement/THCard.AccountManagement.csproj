@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\JetBrains\JetBrainsAnnotations.cs">
+      <Link>JetBrainsAnnotations.cs</Link>
+    </Compile>
     <Compile Include="Account.cs" />
     <Compile Include="AccountId.cs" />
     <Compile Include="AccountRegistration.cs" />

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Text;
+using JetBrains.Annotations;
 using THCard.Common;
 
 namespace THCard.AccountManagement {
@@ -9,7 +11,7 @@ namespace THCard.AccountManagement {
 		User GetUser(UserId userId);
 		User GetUser(AccountId accountId);
 		void SaveUser(User user);
-		void CreateUser(AccountManagement.User user);
+		void CreateUser(User user);
 	}
 
 	public sealed class UserId : GuidId {
@@ -26,10 +28,10 @@ namespace THCard.AccountManagement {
 		}
 
 		public UserId Id {
-			get { return _id; }
+			get { return this._id; }
 			set {
 				Contract.Requires(value != null && !value.IsNew);
-				_id = value;
+				this._id = value;
 			}
 		}
 
@@ -37,44 +39,29 @@ namespace THCard.AccountManagement {
 	}
 
 	public sealed class Name {
-		public static readonly Name Empty = new Name(string.Empty);
 		private readonly string _name;
 
 		public Name(string name) {
 			Contract.Requires(!string.IsNullOrWhiteSpace(name));
-			_name = name;
+			this._name = name;
 		}
 
 		public override string ToString() {
-			return _name;
+			return this._name;
 		}
 
 		private bool Equals(Name other) {
-			return string.Equals(_name, other._name, StringComparison.InvariantCultureIgnoreCase);
+			return string.Equals(this._name, other._name, StringComparison.InvariantCultureIgnoreCase);
 		}
 
-		public static bool Equals(Name x, Name y) {
-			if (ReferenceEquals(x, y)) {
-				return true;
-			}
-			if (x == null || y == null) {
-				return false;
-			}
-			return x.Equals(y);
-		}
-
-		public override bool Equals(object obj) {
-			if (ReferenceEquals(null, obj)) {
-				return false;
-			}
-			if (ReferenceEquals(this, obj)) {
-				return true;
-			}
-			return obj is Name && Equals((Name) obj);
+		public override bool Equals(object other) {
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return other is Name && Equals((Name) other);
 		}
 
 		public override int GetHashCode() {
-			return _name.GetHashCode();
+			return (this._name != null ? this._name.GetHashCode() : 0);
 		}
 	}
 
@@ -85,8 +72,8 @@ namespace THCard.AccountManagement {
 			GivenNames = givenNames;
 		}
 
-		public Name FamilyName { get; set; }
-		public GivenNames GivenNames { get; set; }
+		public Name FamilyName { get; private set; }
+		public GivenNames GivenNames { get; private set; }
 
 		public Name FirstName {
 			get { return GivenNames.FirstName; }
@@ -96,18 +83,20 @@ namespace THCard.AccountManagement {
 			get { return GivenNames.MiddleName; }
 		}
 
-		public override bool Equals(object obj) {
-			if (ReferenceEquals(null, obj)) {
-				return false;
+		public override int GetHashCode() {
+			unchecked {
+				return (FamilyName.GetHashCode() * 397) ^ (GivenNames != null ? GivenNames.GetHashCode() : 0);
 			}
-			if (ReferenceEquals(this, obj)) {
-				return true;
-			}
-			return obj is FullName && Equals((FullName) obj);
 		}
 
-		private bool Equals(FullName obj) {
-			return Name.Equals(FamilyName, obj.FamilyName) && GivenNames.Equals(GivenNames, obj.GivenNames);
+		public override bool Equals(object other) {
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return other is FullName && Equals((FullName) other);
+		}
+
+		private bool Equals(FullName other) {
+			return Equals(this.FamilyName, other.FamilyName) && Equals(this.GivenNames, other.GivenNames);
 		}
 
 		public override string ToString() {
@@ -115,43 +104,46 @@ namespace THCard.AccountManagement {
 		}
 	}
 
-	public class GivenNames {
+	public sealed class GivenNames {
 		private readonly IList<Name> _names;
 
-		public GivenNames(IEnumerable<string> names) {
-			_names = new List<Name>(names.Select(n => new Name(n)));
+		public GivenNames([NotNull] IEnumerable<string> names) {
+			Contract.Requires(names != null);
+			this._names = new List<Name>(names.Select(n => new Name(n)));
 		}
 
-		public GivenNames(params string[] names) : this((IEnumerable<string>) names) {}
+		public GivenNames([NotNull] params string[] names) : this((IEnumerable<string>) names) {}
 
 		public Name FirstName {
-			get { return _names.Count >= 1 ? _names[0] : Name.Empty; }
+			get { return this._names.FirstOrDefault(); }
 		}
 
 		public Name MiddleName {
-			get { return _names.Count >= 2 ? _names[1] : Name.Empty; }
+			get { return this._names.Skip(1).FirstOrDefault(); }
 		}
 
-		public static bool Equals(GivenNames x, GivenNames y) {
-			if (ReferenceEquals(x, y)) {
-				return true;
-			}
-			if (x == null || y == null) {
-				return false;
-			}
-			if (x._names.Count != y._names.Count) {
-				return false;
-			}
-			for (int index = 0; index < x._names.Count; ++index) {
-				if (!Name.Equals(x._names[index], y._names[index])) {
-					return false;
-				}
+		private bool Equals([NotNull] GivenNames other) {
+			if (this._names.Count != other._names.Count) return false;
+			var thisEnumerator = this._names.GetEnumerator();
+			var otherEnumerator = other._names.GetEnumerator();
+			while (thisEnumerator.MoveNext() && otherEnumerator.MoveNext()) {
+				if (!Equals(thisEnumerator.Current, otherEnumerator.Current)) return false;
 			}
 			return true;
 		}
 
+		public override bool Equals(object other) {
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return other is GivenNames && Equals((GivenNames) other);
+		}
+
+		public override int GetHashCode() {
+			return (this._names != null ? this._names.GetHashCode() : 0);
+		}
+
 		public override string ToString() {
-			return string.Join(" ", _names);
+			return string.Join(" ", this._names);
 		}
 	}
 }

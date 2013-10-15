@@ -61,6 +61,8 @@ namespace THCard.Web.Controllers.Account {
 				return RedirectToAction<AccountController>(c => c.SignUp());
 			}
 
+			var foo = new GivenNames();
+
 			var fullName = new FullName(new Name(information.LastName), new GivenNames(information.FirstName));
 			var accountRegistration = new AccountManagement.AccountRegistration(username, password, fullName, new EmailAddress(information.Email));
 			_accountRegistrationService.CreateAccount(accountRegistration);
